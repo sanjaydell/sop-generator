@@ -35,7 +35,7 @@ const openai = new OpenAI({
 });
 
 const app = express();
-app.use("/",express.static('public'));
+app.use("/", express.static("public"));
 app.use(cors());
 app.use(express.json());
 
@@ -56,8 +56,10 @@ app.post("/form", async (req, res) => {
     const generatedText = response.choices[0].text;
 
     const pdfDoc = new PDFDocument();
-    pdfDoc.pipe(fs.createWriteStream("example.pdf"));
-    pdfDoc.text(generatedText);
+    pdfDoc.pipe(fs.createWriteStream("StatementOfPurpose.pdf"));
+    pdfDoc.text(
+      `From\n${req.body.name}\n${req.body.country}\n${req.body.email}\n\n\nTo\nVisa Officer\nHigh Commission of Canada\nSubject: Statement of Purpose for studying in Canada\n\n\n${generatedText}\n\n\nThanks & Regards\n${req.body.name}`
+    );
 
     pdfDoc.end();
 
@@ -77,11 +79,23 @@ app.post("/form", async (req, res) => {
       from: process.env.MY_EMAIL,
       to: req.body.email,
       subject: "Statement of purpose",
-      text: "Here is the PDF file you requested.",
+      text: `Here is the PDF file you requested.\n\n\n Here are the details that you have subitted.\n\n `,
+      html: `
+    <html>
+      <body>
+      <table>
+      <tr>
+      <td>email:</td>
+      <td>${req.body.email}</td>
+      </tr>
+      </table>
+      </body>
+    </html>
+  `,
       attachments: [
         {
-          filename: "example.pdf",
-          path: "example.pdf", // Path to the PDF file you generated
+          filename: "StatementOfPurpose.pdf",
+          path: "StatementOfPurpose.pdf", // Path to the PDF file you generated
         },
       ],
     };
@@ -106,5 +120,5 @@ app.post("/form", async (req, res) => {
 
 const PORT = 8080;
 app.listen(PORT, () => {
-  console.log(`Server is running on PORT ${PORT}`);
+  // console.log(`Server is running on PORT ${PORT}`);
 });

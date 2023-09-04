@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import QuestionCard from "./QuestionCard";
 import { initialFormValue } from "../constants/initialForm";
 import { Button } from "@mui/material";
 import Education from "./Education";
 import RadioButtonComponent from "./RadioButtonComponent";
+import Description from "./Description";
 
 function Home() {
   const [formData, setFormData] = useState(initialFormValue);
@@ -41,30 +41,23 @@ function Home() {
           if (!response.ok) {
             throw new Error("Network response was not ok");
           }
+          alert("Your S.O.P has been successfully sent to your mail.");
+          setFormData(initialFormValue);
           return response.json();
         })
         .then((responseData) => {
           console.log(responseData);
+          alert("Your S.O.P has been successfully sent to your mail.");
+          setFormData(initialFormValue);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
-      // try {
-      //   const response = await axios.get(
-      //     "http://127.0.0.1:8080/form",
-      //     formData
-      //   );
-      //   return response.data;
-      // } catch (error) {
-      //   console.log(error);
-      //   throw error;
-      // }
     } else {
       alert("Please fill all the required fields");
     }
   };
 
-  console.log("1111111111111111", formData);
   const {
     email,
     name,
@@ -89,6 +82,7 @@ function Home() {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
+        <Description />
         <QuestionCard
           title="Email"
           value={email}

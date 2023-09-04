@@ -1,9 +1,10 @@
-import { Card, TextField } from "@mui/material";
+import { Box, Card, TextField } from "@mui/material";
 import React from "react";
+import '../index.css'
 
 function QuestionCard({ title, value, placeholder, onChange }) {
   return (
-    <div style={{ width: "75%", margin: "auto", padding: "1rem" }}>
+    <Box className="question-card">
       <Card
         elevation={3}
         display="flex"
@@ -27,7 +28,7 @@ function QuestionCard({ title, value, placeholder, onChange }) {
           onChange={onChange}
         />
       </Card>
-    </div>
+    </Box>
   );
 }
 

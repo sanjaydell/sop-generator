@@ -1,9 +1,10 @@
 import { Card, Input, MenuItem, Select } from "@mui/material";
 import React from "react";
+import '../index.css'
 
 function Education({ title, value, placeholder, onChange }) {
   return (
-    <div style={{ width: "75%", margin: "auto", padding: "1rem" }}>
+    <div className="question-card">
       <Card
         elevation={3}
         display="flex"
