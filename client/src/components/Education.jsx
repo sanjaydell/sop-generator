@@ -1,4 +1,4 @@
-import { Card, MenuItem, Select } from "@mui/material";
+import { Card, Input, MenuItem, Select } from "@mui/material";
 import React from "react";
 
 function Education({ title, value, placeholder, onChange }) {
@@ -26,6 +26,8 @@ function Education({ title, value, placeholder, onChange }) {
           onChange={onChange}
           sx={{ margin: "1rem 0", width: "26rem" }}
           placeholder="Choose an option"
+          displayEmpty
+          renderValue={value !== "" ? undefined : () => "Choose an option"}
         >
           <MenuItem value="Grade 12">Grade 12</MenuItem>
           <MenuItem value="Diploma">Diploma</MenuItem>

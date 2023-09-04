@@ -30,7 +30,13 @@ function Home() {
 
   const submitForm = async () => {
     if (areAllFormFieldsFilled()) {
-      fetch("http://127.0.0.1:8080/form")
+      fetch("http://127.0.0.1:8080/form", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -43,6 +49,16 @@ function Home() {
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
+      // try {
+      //   const response = await axios.get(
+      //     "http://127.0.0.1:8080/form",
+      //     formData
+      //   );
+      //   return response.data;
+      // } catch (error) {
+      //   console.log(error);
+      //   throw error;
+      // }
     } else {
       alert("Please fill all the required fields");
     }
@@ -67,6 +83,7 @@ function Home() {
     tutionPaid,
     tutionFee,
     gicDone,
+    programOfStudy,
     gicFees,
   } = formData;
   return (
@@ -114,7 +131,7 @@ function Home() {
         />
         <QuestionCard
           title="What is your program of study in Canada?"
-          value=""
+          value={programOfStudy}
           onChange={(e) => changeFormData("programOfStudy", e.target.value)}
         />
         <QuestionCard

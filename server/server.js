@@ -7,7 +7,8 @@ import nodemailer from "nodemailer";
 import PDFDocument from "pdfkit";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
+import bodyParser from "body-parser";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://support.google.com/firebase/answer/7015592
@@ -34,15 +35,20 @@ const openai = new OpenAI({
 });
 
 const app = express();
+app.use("/",express.static('public'));
 app.use(cors());
+app.use(express.json());
 
-app.get("/form", async (req, res) => {
+app.post("/form", async (req, res) => {
+  // console.log(req.body);
+  // const responseData = { message: 'Data received successfully' };
+
+  // res.json(responseData);
   try {
     // Call the OpenAI API to generate text
     const response = await openai.completions.create({
       model: "text-davinci-003",
-      prompt:
-        "my name is sanjay anuchuri, I am from india. genearte a statement of purpose to the visa officer as I got admission for post graduation computers course in university of toronto in canada. give me only the body without any salutations",
+      prompt: `my name is ${req.body.name} I am from ${req.body.country}. genearte a statement of purpose to the visa officer as I got admission for post graduation computers course in ${req.body.university} in canada. give me only the body without any salutations`,
       max_tokens: 2048,
       temperature: 1,
     });
@@ -69,7 +75,7 @@ app.get("/form", async (req, res) => {
     // Email content
     const mailOptions = {
       from: process.env.MY_EMAIL,
-      to: process.env.MY_EMAIL,
+      to: req.body.email,
       subject: "Statement of purpose",
       text: "Here is the PDF file you requested.",
       attachments: [
@@ -89,7 +95,7 @@ app.get("/form", async (req, res) => {
       }
     });
 
-    // await setDoc(doc(db, "form"), req.body);
+    await setDoc(doc(db, "form", "form"), req.body);
 
     res.status(200).send("Data received successfully");
   } catch (error) {

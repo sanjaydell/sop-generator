@@ -7,6 +7,7 @@ export const initialFormValue = {
   course: "",
   workExperience: "",
   canadianInstitute: "",
+  programOfStudy: "",
   country: "",
   goals: "",
   listeningScores: "",
