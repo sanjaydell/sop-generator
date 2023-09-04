@@ -83,10 +83,68 @@ app.post("/form", async (req, res) => {
       html: `
     <html>
       <body>
+      <h4>The below are the details entered</h4>
       <table>
       <tr>
-      <td>email:</td>
+      <td>Email:</td>
       <td>${req.body.email}</td>
+      </tr>
+      <tr>
+      <td>Name:</td>
+      <td>${req.body.name}</td>
+      </tr>
+      <tr>
+      <td>Age:</td>
+      <td>${req.body.age}</td>
+      </tr><tr>
+      <td>Education:</td>
+      <td>${req.body.education}</td>
+      </tr><tr>
+      <td>Institute:</td>
+      <td>${req.body.institute}</td>
+      </tr><tr>
+      <td>Course:</td>
+      <td>${req.body.course}</td>
+      </tr><tr>
+      <td>Work Experience</td>
+      <td>${req.body.workExperience}</td>
+      </tr><tr>
+      <td>Institute in Canada:</td>
+      <td>${req.body.canadianInstitute}</td>
+      </tr><tr>
+      <td>Program of study:</td>
+      <td>${req.body.programOfStudy}</td>
+      </tr><tr>
+      <td>Country:</td>
+      <td>${req.body.country}</td>
+      </tr><tr>
+      <td>Goals:</td>
+      <td>${req.body.goals}</td>
+      </tr><tr>
+      <td>Listening Scores:</td>
+      <td>${req.body.listeningScores}</td>
+      </tr><tr>
+      <td>Reading Scores:</td>
+      <td>${req.body.readingScores}</td>
+      </tr><tr>
+      <td>Writing Scores:</td>
+      <td>${req.body.writingScores}</td>
+      </tr><tr>
+      <td>Speaking Scores</td>
+      <td>${req.body.speakingScores}</td>
+      </tr><tr>
+      <td>Is tution Paid:</td>
+      <td>${req.body.tutionPaid}</td>
+      </tr><tr>
+      <td>Tution fee:</td>
+      <td>${req.body.tutionFee}</td>
+      </tr>
+      <tr>
+      <td>Is GIC done:</td>
+      <td>${req.body.gicDone}</td>
+      </tr><tr>
+      <td>GIC fee:</td>
+      <td>${req.body.gicFees}</td>
       </tr>
       </table>
       </body>
@@ -109,7 +167,7 @@ app.post("/form", async (req, res) => {
       }
     });
 
-    await setDoc(doc(db, "form", "form"), req.body);
+    await setDoc(doc(db, "form", `${Math.floor(Math.random() * (200000 - 1 + 1)) + 1}`), req.body);
 
     res.status(200).send("Data received successfully");
   } catch (error) {
